@@ -1,0 +1,30 @@
+<div class="accordion" id="accordion_products">
+  <% @products.each do |product| %>
+    <div class="card">
+      <div class="card-header" id="heading_<%= product.id %>">
+        <h5 class="mb-0">
+          <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_<%= product.id %>"  aria-expanded="true" aria-controls="collapse_<%= product.id %>"><%= product.name %></button>
+        </h5>
+      </div>
+
+      <div id="collapse_<%= product.id %>" class="collapse" aria-labelledby="heading_<%= product.id %>" data-parent="#accordion_products">
+        <div class="card-body">
+          <h6><%= link_to 'More Details', product_path(product.id), class: 'card-link' %></h6>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Style: <%= product.style %></li>
+            <li class="list-group-item">Brand: <%= product.brand %></li>
+            <li class="list-group-item">Type: <%= product.product_type %></li>
+          </ul>
+          <hr>
+          <li class="list-group-item">Created At:
+            <a href="#" class="tooltip-link" data-original-title="Date" data-toggle="tooltip">
+              <i class="fa fa-calendar"></i>
+              <%= product.created_at.strftime('%B %e at %l:%M %p' ) %>
+            </a>
+          </li>
+        </div><!-- card-body -->
+      </div><!-- collapse_product.id -->
+    </div><!-- card -->
+<% end %>
+</div><!-- accordion -->
+

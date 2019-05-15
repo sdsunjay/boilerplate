@@ -1,0 +1,107 @@
+<% if user_signed_in?  %>
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="blog-area">
+        <div class="blog-left blog-archive">
+          <article class="single-from-blog wow fadeInLeft" style='border: 1px solid #f0f0f0;'>
+            <div class="single-widget" style="border: none">
+              <h2>
+                <%= @user.name %>
+              </h2>
+              <div class="popular-post-widget">
+                <div class="single-item">
+                  <div class="col-sm-8">
+                    <h4 class="user-name">
+                      <i class="fa fa-user" style="color: #00d999; font-size: 1.5em;"></i>
+                      <strong>About me</strong>
+                    </h4>
+                    <h5>
+                      Email:
+                      <% if @user.email? %>
+                        <i class="fa fa-check" style="color: green"></i>
+                        <%= @user.email %>
+                      <% else %>
+                        <i class="fa fa-times" style="color: red"></i>
+                        Email Not Added
+                      <% end %>
+                    </h5>
+                    <h5>
+                      Created At:
+                      <% if @user.created_at? %>
+                        <i class="fa fa-birthday-cake" aria-hidden="true" style="color: #00d999;"></i>
+                        <%= @user.created_at.strftime("%B %d, %Y") %>
+                      <% end %>
+                    </h5>
+                    <hr>
+                    <hr>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class='single-from-blog wow fadeInLeft'>
+            <ul class="nav nav-tabs" id="myTab" role="tablist" style="background-color:#f8f8f8">
+              <li class="nav-item">
+                <a class="nav-link <%= 'active' if params[:active_tab] == 'home-tab' %>" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link <%= 'active' if params[:active_tab] == 'products-tab' %>" id="products-tab" data-toggle="tab" href="#products" role="tab" aria-controls="products" aria-selected="false">My Products</a>
+              </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+
+              <!-- Beginning of Home -->
+              <div class="tab-pane fade <%= 'show active' if params[:active_tab] == 'home-tab' %>" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="row"></div>
+              </div>
+              <!-- End of Home -->
+
+              <!-- Beginning of My Products -->
+              <div class="tab-pane fade <%= 'show active' if params[:active_tab] == 'products-tab' %>" id="products" role="tabpanel" aria-labelledby="products-tab">
+                <h2><%= link_to 'New Product', new_product_path %></h2>
+                <% if @products.try(:any?) %>
+                  <div class="row">
+                    <div class="col">
+                    </div>
+                    <div class="col">
+                      <%= render 'partials/search_products' %>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <h2>Number of Products:
+                        <%= @number_of_products %></h2>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="card-columns">
+                      <%= render 'partials/products', products: @products %>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <%== pagy_nav(@pagy_products) %>
+                  </div>
+                <% else %>
+                  <section class="single-from-blog" style="margin-bottom: 0; border: 1px solid #f0f0f0;">
+                    <div class="blog-title">
+                      <h2>
+                        You do not have any products
+                      </h2>
+                    </div>
+                  </section>
+                <% end %>
+              </div>
+              <!-- End of My Products -->
+            </div>
+            <!-- End of tab-content -->
+          </article>
+          <!-- End of single-from-blog -->
+        </div>
+        <!-- End of blog-area -->
+      </div>
+      <!-- End of col-lg-8 col-md-7 col-sm-12 -->
+    </div>
+    <!-- End of row -->
+  <% else %>
+    <h4>You do not have permission to view this user's profile</h4>
+  <% end %>
